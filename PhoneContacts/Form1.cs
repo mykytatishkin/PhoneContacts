@@ -68,7 +68,7 @@ namespace PhoneContacts
         private DataTable GetDataFromTable()
         {
             DataTable dataTable = new DataTable();
-            string query = "exec GetAllContacts"; // Replace YourTableName with your actual table name
+            string query = "exec GetAllContacts";
 
             // Ensure the connection is open before executing the query
             if (connection.State == ConnectionState.Closed)
@@ -85,24 +85,24 @@ namespace PhoneContacts
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            using (var addForm = new FormAddContact("","",DateTime.Now))
+            using (var addForm = new FormAddContact("", "", DateTime.Now))
             {
                 var result = addForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    // Получаем данные из диалогового окна и добавляем их в базу данных
+                    // Get data from the dialog and add it to the database
                     string fullName = addForm.FullName;
                     string phoneNumber = addForm.PhoneNumber;
                     DateTime dateOfBirth = addForm.DateOfBirth;
 
                     try
                     {
-                        // Открываем соединение с базой данных
+                        // Open the connection to the database
                         using (var connection = new SqlConnection(connectionString))
                         {
                             connection.Open();
 
-                            // Вызываем хранимую процедуру InsertContact
+                            // Call the stored procedure InsertContact
                             using (SqlCommand insertCommand = new SqlCommand("dbo.InsertContact", connection))
                             {
                                 insertCommand.CommandType = CommandType.StoredProcedure;
@@ -112,7 +112,7 @@ namespace PhoneContacts
                                 insertCommand.ExecuteNonQuery();
                             }
 
-                            // После добавления обновляем данные в DataGridView
+                            // After adding, refresh the data in the DataGridView
                             DataTable data = GetDataFromTable();
                             dataGridView.DataSource = data;
                         }
@@ -131,41 +131,41 @@ namespace PhoneContacts
             {
                 DataGridViewRow selectedRow = dataGridView.SelectedRows[0];
 
-                // Получаем текущие значения из выбранной строки
+                // Get current values from the selected row
                 string fullName = selectedRow.Cells["FullName"].Value.ToString();
                 string phoneNumber = selectedRow.Cells["TelephoneNumber"].Value.ToString();
                 DateTime dateOfBirth = (DateTime)selectedRow.Cells["DateOfBirth"].Value;
 
-                // Открываем диалоговое окно с текущими данными для редактирования
+                // Open the dialog with current data for editing
                 using (var editForm = new FormAddContact(fullName, phoneNumber, dateOfBirth))
                 {
                     var result = editForm.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        // Получаем измененные данные из диалогового окна
+                        // Get the updated data from the dialog
                         string updatedFullName = editForm.FullName;
                         string updatedPhoneNumber = editForm.PhoneNumber;
                         DateTime updatedDateOfBirth = editForm.DateOfBirth;
 
                         try
                         {
-                            // Открываем соединение с базой данных
+                            // Open the connection to the database
                             using (var connection = new SqlConnection(connectionString))
                             {
                                 connection.Open();
 
-                                // Вызываем хранимую процедуру UpdateContact
+                                // Call the stored procedure UpdateContact
                                 using (SqlCommand updateCommand = new SqlCommand("dbo.UpdateContact", connection))
                                 {
                                     updateCommand.CommandType = CommandType.StoredProcedure;
-                                    updateCommand.Parameters.AddWithValue("@OldPhoneNumber", phoneNumber); // Используем текущий номер телефона как условие для обновления
+                                    updateCommand.Parameters.AddWithValue("@OldPhoneNumber", phoneNumber); // Use the current phone number as the condition for updating
                                     updateCommand.Parameters.AddWithValue("@NewFullName", updatedFullName);
                                     updateCommand.Parameters.AddWithValue("@NewPhoneNumber", updatedPhoneNumber);
                                     updateCommand.Parameters.AddWithValue("@NewDateOfBirth", updatedDateOfBirth);
                                     updateCommand.ExecuteNonQuery();
                                 }
 
-                                // После обновления обновляем данные в DataGridView
+                                // After updating, refresh the data in the DataGridView
                                 DataTable data = GetDataFromTable();
                                 dataGridView.DataSource = data;
                             }
@@ -183,8 +183,6 @@ namespace PhoneContacts
             }
         }
 
-
-
         private void deleteButton_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count > 0)
@@ -198,7 +196,7 @@ namespace PhoneContacts
 
                     int selectedRowID = (int)dataGridView.SelectedRows[0].Cells["ID"].Value;
 
-                    // Вызываем хранимую процедуру DeleteContact
+                    // Call the stored procedure DeleteContact
                     using (SqlCommand deleteCommand = new SqlCommand("dbo.DeleteContact", connection))
                     {
                         deleteCommand.CommandType = CommandType.StoredProcedure;
@@ -206,7 +204,7 @@ namespace PhoneContacts
                         deleteCommand.ExecuteNonQuery();
                     }
 
-                    // После удаления обновляем данные в DataGridView
+                    // After deleting, refresh the data in the DataGridView
                     DataTable data = GetDataFromTable();
                     dataGridView.DataSource = data;
                 }
