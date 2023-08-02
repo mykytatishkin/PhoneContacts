@@ -1,4 +1,4 @@
---create database PhoneContacts;
+﻿--create database PhoneContacts;
 --use PhoneContacts;
 
 --create table Contacts (
@@ -48,4 +48,48 @@
 --    from Contacts;
 --end;
 
-exec GetAllContacts
+--create procedure DeleteContact
+--    @ID int
+--as
+--begin
+--    set nocount on;
+
+--    delete from Contacts
+--    where ID = @ID;
+--end
+
+--CREATE PROCEDURE InsertContact
+--    @FullName NVARCHAR(100),
+--    @TelephoneNumber NVARCHAR(15),
+--    @DateOfBirth DATE
+--AS
+--BEGIN
+--    SET NOCOUNT ON;
+
+--    INSERT INTO Contacts (FullName, TelephoneNumber, DateOfBirth)
+--    VALUES (@FullName, @TelephoneNumber, @DateOfBirth);
+--END
+
+--CREATE PROCEDURE UpdateContact
+--    @OldPhoneNumber NVARCHAR(20),
+--    @NewFullName NVARCHAR(100),
+--    @NewPhoneNumber NVARCHAR(20),
+--    @NewDateOfBirth DATE
+--AS
+--BEGIN
+--    SET NOCOUNT ON;
+
+--     --Обновляем запись с заданным номером телефона (@OldPhoneNumber)
+--     --на новые значения (@NewFullName, @NewPhoneNumber, @NewDateOfBirth)
+
+--    UPDATE Contacts
+--    SET FullName = @NewFullName,
+--        TelephoneNumber = @NewPhoneNumber,
+--        DateOfBirth = @NewDateOfBirth
+--    WHERE TelephoneNumber = @OldPhoneNumber;
+--END
+
+
+--exec GetAllContacts
+--exec DeleteContact @ID = 11
+--exec GetAllContacts

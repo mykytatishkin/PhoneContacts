@@ -42,39 +42,42 @@
             dataGridView.Location = new Point(12, 12);
             dataGridView.Name = "dataGridView";
             dataGridView.RowTemplate.Height = 25;
-            dataGridView.Size = new Size(489, 426);
+            dataGridView.Size = new Size(444, 426);
             dataGridView.TabIndex = 0;
             // 
             // AddButton
             // 
-            AddButton.Location = new Point(507, 12);
+            AddButton.Location = new Point(462, 12);
             AddButton.Name = "AddButton";
             AddButton.Size = new Size(75, 23);
             AddButton.TabIndex = 1;
             AddButton.Text = "Add";
             AddButton.UseVisualStyleBackColor = true;
+            AddButton.Click += AddButton_Click;
             // 
             // UpdateButton
             // 
-            UpdateButton.Location = new Point(507, 41);
+            UpdateButton.Location = new Point(462, 41);
             UpdateButton.Name = "UpdateButton";
             UpdateButton.Size = new Size(75, 23);
             UpdateButton.TabIndex = 2;
             UpdateButton.Text = "Update";
             UpdateButton.UseVisualStyleBackColor = true;
+            UpdateButton.Click += UpdateButton_Click;
             // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(507, 70);
+            deleteButton.Location = new Point(462, 70);
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(75, 23);
             deleteButton.TabIndex = 3;
             deleteButton.Text = "Delete";
             deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
             // 
             // RefreshButton
             // 
-            RefreshButton.Location = new Point(507, 99);
+            RefreshButton.Location = new Point(462, 99);
             RefreshButton.Name = "RefreshButton";
             RefreshButton.Size = new Size(75, 23);
             RefreshButton.TabIndex = 4;
@@ -86,7 +89,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(548, 450);
             Controls.Add(RefreshButton);
             Controls.Add(deleteButton);
             Controls.Add(UpdateButton);
