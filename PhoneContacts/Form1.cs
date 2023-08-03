@@ -135,6 +135,7 @@ namespace PhoneContacts
                 string fullName = selectedRow.Cells["FullName"].Value.ToString();
                 string phoneNumber = selectedRow.Cells["TelephoneNumber"].Value.ToString();
                 DateTime dateOfBirth = (DateTime)selectedRow.Cells["DateOfBirth"].Value;
+                int contactID = (int)selectedRow.Cells["ID"].Value; // Get the ID of the selected contact
 
                 // Open the dialog with current data for editing
                 using (var editForm = new FormAddContact(fullName, phoneNumber, dateOfBirth))
@@ -154,11 +155,11 @@ namespace PhoneContacts
                             {
                                 connection.Open();
 
-                                // Call the stored procedure UpdateContact
+                                // Call the stored procedure UpdateContact with the contactID parameter
                                 using (SqlCommand updateCommand = new SqlCommand("dbo.UpdateContact", connection))
                                 {
                                     updateCommand.CommandType = CommandType.StoredProcedure;
-                                    updateCommand.Parameters.AddWithValue("@OldPhoneNumber", phoneNumber); // Use the current phone number as the condition for updating
+                                    updateCommand.Parameters.AddWithValue("@ID", contactID); // Pass the ID of the selected contact
                                     updateCommand.Parameters.AddWithValue("@NewFullName", updatedFullName);
                                     updateCommand.Parameters.AddWithValue("@NewPhoneNumber", updatedPhoneNumber);
                                     updateCommand.Parameters.AddWithValue("@NewDateOfBirth", updatedDateOfBirth);
@@ -182,6 +183,7 @@ namespace PhoneContacts
                 MessageBox.Show("Please select a row to edit.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
