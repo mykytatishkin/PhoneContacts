@@ -1,4 +1,4 @@
 # PhoneContacts
 
-- [ ] Fix update by phone number
-- [ ] DataBase Deploy
+- [x] Fix update by phone number
+- [x] DataBase Deploy
